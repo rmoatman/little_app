@@ -1,0 +1,9 @@
+/* @media print {
+   body {
+     margin: 1in;
+    }
+} */
+
+@page {
+    margin: 1in;
+}

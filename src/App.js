@@ -1,11 +1,14 @@
 import React from 'react';
-import ReactToPrint from "react-to-print";
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Card from './components/Card';
 
+// added
+import ReactToPrint from "react-to-print";
+import "./styles/styles.css"
+
 // In our main App component, we are rendering only single instances of Header and Navbar and several instances of Card
-  class ComponentToPrint extends React.Component {
+class ComponentToPrint extends React.Component {
     render() {
       return (
         <div>
