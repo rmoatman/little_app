@@ -1,5 +1,4 @@
 // import React from 'react';
-// import './App.css';
 // import Navbar from './components/Navbar';
 // import Header from './components/Header';
 // import Card from './components/Card';
@@ -40,39 +39,43 @@
 // export default Example;
 
 import React, { useEffect, useState } from 'react';
-import getRxcuiInfo from './components/DrugInfo';
+// import './App.css';
+import List from './components/List';
 import withListLoading from './components/withListLoading';
-import axios from 'axios';
-
-// start here-- app called from index.js
-// calls withListLoading and passes get RxcuiInfo
 function App() {
-  const ListLoading = withListLoading(getRxcuiInfo);
+  const ListLoading = withListLoading(List);
   const [appState, setAppState] = useState({
     loading: false,
-    drugs: null,
+    repos: null,
   });
 
   useEffect(() => {
-    const medicine="prozac"
     setAppState({ loading: true });
-    const apiUrl = `https://rxnav.nlm.nih.gov/REST/drugs.json?name=` + medicine;
-    axios.get(apiUrl).then((drugs) => {
-        const allDrugs = drugs.data
-        setAppState({ loading: false, drugs: allDrugs });
+    const apiUrl = `https://api.github.com/users/rmoatman/repos`;
+    fetch(apiUrl)
+      .then((res) => res.json())
+      .then((repos) => {
+        setAppState({ loading: false, repos: repos });
       });
   }, [setAppState]);
-
   return (
     <div className='App'>
       <div className='container'>
-        <h1>Drug Information</h1>
+        <h1>My Repositories</h1>
       </div>
       <div className='repo-container'>
-        <ListLoading isLoading={appState.loading} drugs={appState.drugs} />
+        <ListLoading isLoading={appState.loading} repos={appState.repos} />
       </div>
+      <footer>
+        <div className='footer'>
+          Built{' '}
+          <span role='img' aria-label='love'>
+            💚
+          </span>{' '}
+          with by Shedrack Akintayo
+        </div>
+      </footer>
     </div>
   );
 }
-
 export default App;

@@ -1,5 +1,4 @@
 // import React from 'react';
-// import './App.css';
 // import Navbar from './components/Navbar';
 // import Header from './components/Header';
 // import Card from './components/Card';
@@ -40,29 +39,37 @@
 // export default Example;
 
 import React, { useEffect, useState } from 'react';
-import getRxcuiInfo from './components/DrugInfo';
+// import './App.css';
+import List from './components/List';
 import withListLoading from './components/withListLoading';
 import axios from 'axios';
 
-// start here-- app called from index.js
-// calls withListLoading and passes get RxcuiInfo
 function App() {
-  const ListLoading = withListLoading(getRxcuiInfo);
+  const ListLoading = withListLoading(List);
   const [appState, setAppState] = useState({
     loading: false,
     drugs: null,
   });
 
   useEffect(() => {
-    const medicine="prozac"
     setAppState({ loading: true });
-    const apiUrl = `https://rxnav.nlm.nih.gov/REST/drugs.json?name=` + medicine;
+    const apiUrl = `https://rxnav.nlm.nih.gov/REST/drugs.json?name=prozac`;
     axios.get(apiUrl).then((drugs) => {
         const allDrugs = drugs.data
         setAppState({ loading: false, drugs: allDrugs });
       });
   }, [setAppState]);
 
+
+  // useEffect(() => {
+  //   setAppState({ loading: true });
+  //   const apiUrl = `https://api.github.com/users/hacktivist123/drugs`;
+  //   fetch(apiUrl)
+  //     .then((res) => res.json())
+  //     .then((drugs) => {
+  //       setAppState({ loading: false, drugs: drugs });
+  //     });
+  // }, [setAppState]);
   return (
     <div className='App'>
       <div className='container'>
@@ -74,5 +81,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
